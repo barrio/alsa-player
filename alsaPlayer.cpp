@@ -14,7 +14,7 @@ struct WavHeader {
     uint16_t audio_format;
     uint16_t num_channels;
     uint32_t sample_rate;
-    uint32_t byte_rate;
+    uint32_t byte_rate; 
     uint16_t block_align;
     uint16_t bits_per_sample;
     char data_tag[4];
@@ -76,11 +76,19 @@ int main(int argc, char* argv[]) {
     snd_pcm_hw_params_alloca(&params);
     snd_pcm_hw_params_any(pcm_handle, params);
     snd_pcm_hw_params_set_access(pcm_handle, params, SND_PCM_ACCESS_RW_INTERLEAVED);
-    snd_pcm_hw_params_set_format(pcm_handle, params, 
-        header.bits_per_sample == 16 ? SND_PCM_FORMAT_S16_LE : SND_PCM_FORMAT_U8);
     snd_pcm_hw_params_set_channels(pcm_handle, params, header.num_channels);
     snd_pcm_hw_params_set_rate(pcm_handle, params, header.sample_rate, 0);
 
+    // Setze Audioformat basierend auf der Bit-Tiefe
+    if (header.bits_per_sample == 16) {
+        snd_pcm_hw_params_set_format(pcm_handle, params, SND_PCM_FORMAT_S16_LE);
+    } else if (header.bits_per_sample == 24) {
+        snd_pcm_hw_params_set_format(pcm_handle, params, SND_PCM_FORMAT_S24_3LE);
+    } else {
+        std::cerr << "Nicht unterstützte Bit-Tiefe: " << header.bits_per_sample << std::endl;
+        snd_pcm_close(pcm_handle);
+        return 1;
+    } 
     if (snd_pcm_hw_params(pcm_handle, params) < 0) {
         std::cerr << "Fehler beim Festlegen der PCM-Parameter." << std::endl;
         snd_pcm_close(pcm_handle);

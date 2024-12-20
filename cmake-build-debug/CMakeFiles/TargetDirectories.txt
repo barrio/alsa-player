@@ -1,0 +1,3 @@
+/home/barrios/code/alsa-player/cmake-build-debug/CMakeFiles/alsaPlayer.dir
+/home/barrios/code/alsa-player/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/barrios/code/alsa-player/cmake-build-debug/CMakeFiles/rebuild_cache.dir

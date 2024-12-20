@@ -1,2 +1,4 @@
 *.wav
 alsaPlayer
+build/
+cmake-build-debug/

@@ -12,7 +12,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(ALSA REQUIRED)
 
 # Füge die ausführbare Datei hinzu
-add_executable(alsaPlayer alsaPlayer.cpp)
+add_executable(alsaPlayer alsaPlayerOOP.cpp)
 
 # Linke die ALSA-Bibliothek
 target_link_libraries(alsaPlayer PRIVATE ALSA::ALSA)
